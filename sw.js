@@ -1,11 +1,11 @@
 ﻿const CACHE_NAME = "schedify-shell-v1",
   CORE_ASSETS = [
-    "/",
-    "/index.html",
-    "/styles.css",
-    "/app.js",
-    "/manifest.webmanifest",
-    "/icon.svg",
+    "./",
+    "./index.html",
+    "./styles.css",
+    "./app.js",
+    "./manifest.webmanifest",
+    "./icon.svg",
   ];
 (self.addEventListener("install", (e) => {
   (e.waitUntil(caches.open(CACHE_NAME).then((e) => e.addAll(CORE_ASSETS))),

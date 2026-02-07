@@ -2,12 +2,109 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
     <title>Schedify</title>
-    <link rel="manifest" href="/manifest.webmanifest" />
-    <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="icon" href="./icon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
-    <script src="/app.js" defer="defer"></script>
+    <header class="top-bar">
+      <label
+        for="themeToggle"
+        class="themeToggle st-sunMoonThemeToggleBtn"
+        type="checkbox"
+      >
+        <input
+          type="checkbox"
+          id="themeToggle"
+          class="themeToggleInput"
+          aria-label="Toggle theme"
+        />
+        <svg
+          width="18"
+          height="18"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+          stroke="none"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <mask id="moon-mask">
+            <rect x="0" y="0" width="20" height="20" fill="white"></rect>
+            <circle cx="11" cy="3" r="8" fill="black"></circle>
+          </mask>
+          <circle
+            class="sunMoon"
+            cx="10"
+            cy="10"
+            r="8"
+            mask="url(#moon-mask)"
+          ></circle>
+          <g>
+            <circle class="sunRay sunRay1" cx="18" cy="10" r="1.5"></circle>
+            <circle class="sunRay sunRay2" cx="14" cy="16.928" r="1.5"></circle>
+            <circle class="sunRay sunRay3" cx="6" cy="16.928" r="1.5"></circle>
+            <circle class="sunRay sunRay4" cx="2" cy="10" r="1.5"></circle>
+            <circle class="sunRay sunRay5" cx="6" cy="3.1718" r="1.5"></circle>
+            <circle class="sunRay sunRay6" cx="14" cy="3.1718" r="1.5"></circle>
+          </g>
+        </svg>
+      </label>
+    </header>
+    <main class="app" role="main">
+      <section
+        id="screen-setup"
+        class="screen is-active"
+        data-screen="setup"
+        aria-label="Setup screen"
+      ></section>
+      <section
+        id="screen-customize"
+        class="screen"
+        data-screen="customize"
+        aria-label="Customize screen"
+      ></section>
+      <section
+        id="screen-generate"
+        class="screen"
+        data-screen="generate"
+        aria-label="Generate screen"
+      ></section>
+    </main>
+    <nav class="bottom-nav" aria-label="Primary">
+      <button
+        class="nav-button is-active"
+        type="button"
+        data-target="setup"
+        aria-controls="screen-setup"
+        aria-current="page"
+        aria-label="Setup"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="square" stroke-width="2" d="M12 15H4.198C3.641 14.833 2 14 2 12s1.64-2.833 2.198-3h1.239M12 9h7.802c.557.167 2.198 1 2.198 3s-1.64 2.833-2.198 3h-1.238M9 12V4.198C9.167 3.641 10 2 12 2s2.833 1.64 3 2.198v1.239M15 12v7.802c-.167.557-1 2.198-3 2.198s-2.833-1.64-3-2.198v-1.238"/></svg>
+      </button>
+      <button
+        class="nav-button"
+        type="button"
+        data-target="customize"
+        aria-controls="screen-customize"
+        aria-label="Customize"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="-2 -4 24 24" style="transform: rotate(-90deg);"> <path fill="currentColor" d="M9 12V1a1 1 0 1 1 2 0v11h1a1 1 0 0 1 0 2h-1v1a1 1 0 0 1-2 0v-1H8a1 1 0 0 1 0-2zm7-10V1a1 1 0 0 1 2 0v1h1a1 1 0 0 1 0 2h-1v11a1 1 0 0 1-2 0V4h-1a1 1 0 0 1 0-2zM4 5h1a1 1 0 1 1 0 2H4v8a1 1 0 0 1-2 0V7H1a1 1 0 1 1 0-2h1V1a1 1 0 1 1 2 0z"/> </svg>
+      </button>
+      <button
+        class="nav-button"
+        type="button"
+        data-target="generate"
+        aria-controls="screen-generate"
+        aria-label="Generate"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path fill="currentColor" d="m7.187 13.528l-.034.056a.2.2 0 0 1-.306 0l-.034-.056l-.069-.175l.256.101l.255-.1zM6.813 2.472a.2.2 0 0 1 .374 0L8.219 5.09a3 3 0 0 0 1.69 1.69l2.444.963l.101.256l-.1.255l-2.445.964l-.143.06a3 3 0 0 0-1.547 1.63l-.964 2.444l-.255.101l-.256-.1l-.963-2.445a3 3 0 0 0-1.547-1.63l-.143-.06l-2.62-1.032a.2.2 0 0 1 0-.374l.175-.069l2.445-.963a3 3 0 0 0 1.63-1.547l.06-.143zm-.102 2.986A4 4 0 0 1 4.648 7.63l-.19.08l-.733.29l.733.289a4 4 0 0 1 2.253 2.253l.289.732l.29-.732a4 4 0 0 1 2.252-2.253L10.274 8l-.732-.29A4 4 0 0 1 7.37 5.649l-.08-.19L7 4.725zm5.817 2.355a.2.2 0 0 1 0 .374l-.175.068l.101-.255l-.1-.256zm-.165-4.947c.224.401.579.716 1.011.887l.39.154a.1.1 0 0 1 0 .186l-.087.034l-.303.12l-.188.086a2 2 0 0 0-.939 1.041l-.12.303l-.034.087l-.016.028a.1.1 0 0 1-.154 0l-.016-.028l-.035-.087l-.12-.303a2 2 0 0 0-.937-1.041l-.189-.086l-.39-.154a.1.1 0 0 1 0-.186l.086-.035l.304-.12c.432-.17.786-.485 1.01-.886L12 2.723zm-.456-.63a.1.1 0 0 1 .186 0l.154.39q.05.124.116.24L12 2.723l-.364.143l.031-.052l.086-.188zm.519 6.951a.08.08 0 0 1 .148 0a3.97 3.97 0 0 0 2.239 2.239a.08.08 0 0 1 0 .148l-.07.03a3.97 3.97 0 0 0-2.169 2.209l-.012.022a.08.08 0 0 1-.123 0l-.013-.023a3.97 3.97 0 0 0-2.049-2.158l-.19-.08a.08.08 0 0 1 0-.148a3.97 3.97 0 0 0 2.239-2.239m.074 1.784q-.245.285-.53.529q.285.245.53.528q.245-.284.528-.528a5 5 0 0 1-.528-.53"/></svg>
+      </button>
+    </nav>
+    <script src="./app.js" defer="defer"></script>
   </body>
 </html>
