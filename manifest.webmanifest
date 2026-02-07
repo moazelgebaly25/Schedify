@@ -1,0 +1,12 @@
+{
+    "name": "Schedify",
+    "start_url": "/",
+    "display": "standalone",
+    "icons": [
+        {
+            "src": "/icon.svg",
+            "sizes": "any",
+            "type": "image/svg+xml"
+        }
+    ]
+}

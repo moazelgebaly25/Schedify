@@ -1,0 +1,16 @@
+:root {
+  color-scheme: light;
+  --color-background: #f7f9fb;
+  --color-foreground: #0f172a;
+  --color-primary: #1e3a8a;
+  --color-primary-foreground: #ffffff;
+  --color-border: #e5e7eb;
+}
+.dark {
+  color-scheme: dark;
+  --color-background: #0b0f14;
+  --color-foreground: #f1f5f9;
+  --color-primary: #e5e7eb;
+  --color-primary-foreground: #0b0f14;
+  --color-border: #1f2933;
+}
