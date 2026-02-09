@@ -7,53 +7,142 @@
       content="width=device-width, initial-scale=1, viewport-fit=cover"
     />
     <title>Schedify</title>
-    <link rel="manifest" href="./manifest.webmanifest" />
-    <link rel="icon" href="./icon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="./styles.css" />
+    <link rel="manifest" href="./manifest.webmanifest" id="manifestLink" />
+    <meta name="theme-color" content="#faf8f5" id="themeColor" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="default"
+      id="appleStatusBar"
+    />
+    <meta name="msapplication-TileColor" content="#faf8f5" id="msTileColor" />
+    <link
+      rel="icon"
+      href="./assets/icons/icon-light.svg"
+      type="image/svg+xml"
+      sizes="any"
+      id="appIcon"
+    />
+    <link
+      rel="apple-touch-icon"
+      href="./assets/icons/icon-light.svg"
+      id="appleIcon"
+    />
+    <link
+      rel="mask-icon"
+      href="./assets/icons/icon-mask.svg"
+      color="#4a2e20"
+      id="maskIcon"
+    />
+    <script>
+      (() => {
+        const getTheme = () => {
+          try {
+            const stored = localStorage.getItem("theme");
+            if (stored === "light" || stored === "dark") return stored;
+          } catch (e) {
+          }
+          return window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light";
+        };
+        const refreshLinkHref = (selector, href) => {
+          const link = document.querySelector(selector);
+          if (!link) return;
+          if (link.getAttribute("href") === href) return;
+          const clone = link.cloneNode(true);
+          clone.setAttribute("href", href);
+          const parent = link.parentNode;
+          if (parent) parent.replaceChild(clone, link);
+        };
+        const applyThemeAssets = (mode) => {
+          const isDark = mode === "dark";
+          const themeColor = isDark ? "#0f0d0b" : "#faf8f5";
+          const themeMeta = document.querySelector("#themeColor");
+          if (themeMeta) themeMeta.setAttribute("content", themeColor);
+          const msTile = document.querySelector("#msTileColor");
+          if (msTile) msTile.setAttribute("content", themeColor);
+          const appleStatus = document.querySelector("#appleStatusBar");
+          if (appleStatus)
+            appleStatus.setAttribute("content", isDark ? "black" : "default");
+          refreshLinkHref(
+            "#manifestLink",
+            isDark ? "./manifest-dark.webmanifest" : "./manifest.webmanifest"
+          );
+          const iconHref = isDark
+            ? "./assets/icons/icon-dark.svg"
+            : "./assets/icons/icon-light.svg";
+          refreshLinkHref("#appIcon", iconHref);
+          refreshLinkHref("#appleIcon", iconHref);
+          const maskIcon = document.querySelector("#maskIcon");
+          if (maskIcon) {
+            maskIcon.setAttribute("color", isDark ? "#f1e7de" : "#4a2e20");
+          }
+        };
+        const mode = getTheme();
+        document.documentElement.classList.toggle("dark", mode === "dark");
+        applyThemeAssets(mode);
+        window.__applyThemeAssets = applyThemeAssets;
+      })();
+    </script>
+    <link rel="stylesheet" href="./assets/css/styles.css" />
   </head>
   <body>
     <header class="top-bar">
-      <label
-        for="themeToggle"
-        class="themeToggle st-sunMoonThemeToggleBtn"
-        type="checkbox"
+      <svg
+        class="app-logo"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 28 28"
+        aria-hidden="true"
+        focusable="false"
       >
-        <input
+        <rect class="app-logo__base" x="3" y="4" width="16" height="20" rx="5" />
+        <rect class="app-logo__top" x="9" y="8" width="16" height="16" rx="5" />
+        <path class="app-logo__mark" d="M12 14h8M12 18h5" />
+      </svg>
+      <h1 class="screen-title" aria-live="polite"></h1>
+      <div class="top-actions">
+        <label
+          for="themeToggle"
+          class="themeToggle st-sunMoonThemeToggleBtn"
           type="checkbox"
-          id="themeToggle"
-          class="themeToggleInput"
-          aria-label="Toggle theme"
-        />
-        <svg
-          width="18"
-          height="18"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-          stroke="none"
-          aria-hidden="true"
-          focusable="false"
         >
-          <mask id="moon-mask">
-            <rect x="0" y="0" width="20" height="20" fill="white"></rect>
-            <circle cx="11" cy="3" r="8" fill="black"></circle>
-          </mask>
-          <circle
-            class="sunMoon"
-            cx="10"
-            cy="10"
-            r="8"
-            mask="url(#moon-mask)"
-          ></circle>
-          <g>
-            <circle class="sunRay sunRay1" cx="18" cy="10" r="1.5"></circle>
-            <circle class="sunRay sunRay2" cx="14" cy="16.928" r="1.5"></circle>
-            <circle class="sunRay sunRay3" cx="6" cy="16.928" r="1.5"></circle>
-            <circle class="sunRay sunRay4" cx="2" cy="10" r="1.5"></circle>
-            <circle class="sunRay sunRay5" cx="6" cy="3.1718" r="1.5"></circle>
-            <circle class="sunRay sunRay6" cx="14" cy="3.1718" r="1.5"></circle>
-          </g>
-        </svg>
-      </label>
+          <input
+            type="checkbox"
+            id="themeToggle"
+            class="themeToggleInput"
+            aria-label="Toggle theme"
+          />
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            stroke="none"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <mask id="moon-mask">
+              <rect x="0" y="0" width="20" height="20" fill="white"></rect>
+              <circle cx="11" cy="3" r="8" fill="black"></circle>
+            </mask>
+            <circle
+              class="sunMoon"
+              cx="10"
+              cy="10"
+              r="8"
+              mask="url(#moon-mask)"
+            ></circle>
+            <g>
+              <circle class="sunRay sunRay1" cx="18" cy="10" r="1.5"></circle>
+              <circle class="sunRay sunRay2" cx="14" cy="16.928" r="1.5"></circle>
+              <circle class="sunRay sunRay3" cx="6" cy="16.928" r="1.5"></circle>
+              <circle class="sunRay sunRay4" cx="2" cy="10" r="1.5"></circle>
+              <circle class="sunRay sunRay5" cx="6" cy="3.1718" r="1.5"></circle>
+              <circle class="sunRay sunRay6" cx="14" cy="3.1718" r="1.5"></circle>
+            </g>
+          </svg>
+        </label>
+      </div>
     </header>
     <main class="app" role="main">
       <section
@@ -61,7 +150,120 @@
         class="screen is-active"
         data-screen="setup"
         aria-label="Setup screen"
-      ></section>
+      >
+        <div class="hero-card hero-card--featured">
+          <svg
+            class="hero-card__plus"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <path
+              fill="currentColor"
+              d="M11 5a1 1 0 0 1 2 0v6h6a1 1 0 1 1 0 2h-6v6a1 1 0 1 1-2 0v-6H5a1 1 0 1 1 0-2h6z"
+            />
+          </svg>
+          <svg
+            class="hero-card__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <path
+              fill="currentColor"
+              d="M12 14.195c-.176 0-.348-.046-.5-.133l-9-5.198a1 1 0 0 1 0-1.732l9-5.194c.31-.177.69-.177 1 0l9 5.194a1 1 0 0 1 0 1.732l-9 5.198a1 1 0 0 1-.5.133"
+              opacity="0.25"
+            />
+            <path
+              fill="currentColor"
+              d="m21.5 11.132l-1.964-1.134l-7.036 4.064c-.31.178-.69.178-1 0L4.464 9.998L2.5 11.132a1 1 0 0 0 0 1.732l9 5.198c.31.178.69.178 1 0l9-5.198a1 1 0 0 0 0-1.732"
+              opacity="0.5"
+            />
+            <path
+              fill="currentColor"
+              d="m21.5 15.132l-1.964-1.134l-7.036 4.064c-.31.178-.69.178-1 0l-7.036-4.064L2.5 15.132a1 1 0 0 0 0 1.732l9 5.198c.31.178.69.178 1 0l9-5.198a1 1 0 0 0 0-1.732"
+            />
+          </svg>
+          <div class="hero-card__meta hero-card__meta--left">
+            <span class="hero-card__label hero-card__label--muted">NEW UNIT</span>
+            <span class="hero-card__text">Add Course</span>
+          </div>
+          <button
+            class="hero-card__action"
+            type="button"
+            data-screen-target="add-course"
+            aria-label="Open Add Course"
+          ></button>
+        </div>
+        <div class="hero-card-row" role="presentation" aria-hidden="true">
+          <div class="hero-card hero-card--mini" role="presentation" aria-hidden="true">
+            <svg
+              class="hero-card__mini-icon"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <g fill="none">
+                <rect
+                  width="14"
+                  height="6"
+                  x="5"
+                  y="13"
+                  fill="currentColor"
+                  fill-opacity="0.25"
+                  rx="2"
+                />
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  d="M9.5 13.5L12 16m0 0l2.5-2.5M12 16V6"
+                  stroke-width="1"
+                />
+              </g>
+            </svg>
+            <span class="hero-card__title">Import</span>
+          </div>
+          <div class="hero-card hero-card--mini" role="presentation" aria-hidden="true">
+            <svg
+              class="hero-card__mini-icon hero-card__mini-icon--right"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <g fill="none">
+                <rect
+                  width="14"
+                  height="6"
+                  x="5"
+                  y="13"
+                  fill="currentColor"
+                  fill-opacity="0.25"
+                  rx="2"
+                />
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  d="M9.5 8.5L12 6m0 0l2.5 2.5M12 6v10"
+                  stroke-width="1"
+                />
+              </g>
+            </svg>
+            <span class="hero-card__title">Export</span>
+          </div>
+        </div>
+      </section>
       <section
         id="screen-customize"
         class="screen"
@@ -73,6 +275,13 @@
         class="screen"
         data-screen="generate"
         aria-label="Generate screen"
+      ></section>
+      <section
+        id="screen-add-course"
+        class="screen"
+        data-screen="add-course"
+        data-title="Add Course"
+        aria-label="Add course screen"
       ></section>
     </main>
     <nav class="bottom-nav" aria-label="Primary">
@@ -105,6 +314,6 @@
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path fill="currentColor" d="m7.187 13.528l-.034.056a.2.2 0 0 1-.306 0l-.034-.056l-.069-.175l.256.101l.255-.1zM6.813 2.472a.2.2 0 0 1 .374 0L8.219 5.09a3 3 0 0 0 1.69 1.69l2.444.963l.101.256l-.1.255l-2.445.964l-.143.06a3 3 0 0 0-1.547 1.63l-.964 2.444l-.255.101l-.256-.1l-.963-2.445a3 3 0 0 0-1.547-1.63l-.143-.06l-2.62-1.032a.2.2 0 0 1 0-.374l.175-.069l2.445-.963a3 3 0 0 0 1.63-1.547l.06-.143zm-.102 2.986A4 4 0 0 1 4.648 7.63l-.19.08l-.733.29l.733.289a4 4 0 0 1 2.253 2.253l.289.732l.29-.732a4 4 0 0 1 2.252-2.253L10.274 8l-.732-.29A4 4 0 0 1 7.37 5.649l-.08-.19L7 4.725zm5.817 2.355a.2.2 0 0 1 0 .374l-.175.068l.101-.255l-.1-.256zm-.165-4.947c.224.401.579.716 1.011.887l.39.154a.1.1 0 0 1 0 .186l-.087.034l-.303.12l-.188.086a2 2 0 0 0-.939 1.041l-.12.303l-.034.087l-.016.028a.1.1 0 0 1-.154 0l-.016-.028l-.035-.087l-.12-.303a2 2 0 0 0-.937-1.041l-.189-.086l-.39-.154a.1.1 0 0 1 0-.186l.086-.035l.304-.12c.432-.17.786-.485 1.01-.886L12 2.723zm-.456-.63a.1.1 0 0 1 .186 0l.154.39q.05.124.116.24L12 2.723l-.364.143l.031-.052l.086-.188zm.519 6.951a.08.08 0 0 1 .148 0a3.97 3.97 0 0 0 2.239 2.239a.08.08 0 0 1 0 .148l-.07.03a3.97 3.97 0 0 0-2.169 2.209l-.012.022a.08.08 0 0 1-.123 0l-.013-.023a3.97 3.97 0 0 0-2.049-2.158l-.19-.08a.08.08 0 0 1 0-.148a3.97 3.97 0 0 0 2.239-2.239m.074 1.784q-.245.285-.53.529q.285.245.53.528q.245-.284.528-.528a5 5 0 0 1-.528-.53"/></svg>
       </button>
     </nav>
-    <script src="./app.js" defer="defer"></script>
+    <script src="./assets/js/app.js" defer="defer"></script>
   </body>
 </html>

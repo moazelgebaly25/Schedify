@@ -3,11 +3,11 @@
     "start_url": "./",
     "scope": "./",
     "display": "standalone",
-    "theme_color": "#faf8f5",
-    "background_color": "#faf8f5",
+    "theme_color": "#0f0d0b",
+    "background_color": "#0f0d0b",
     "icons": [
         {
-            "src": "./assets/icons/icon-light.svg",
+            "src": "./assets/icons/icon-dark.svg",
             "sizes": "any",
             "type": "image/svg+xml",
             "purpose": "any maskable"

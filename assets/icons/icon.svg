@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" fill="none">
+  <style>
+    :root {
+      --base: #4a2e20;
+      --top: #603e2c;
+      --mark: #fdfbf8;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --base: #f1e7de;
+        --top: #c8a084;
+        --mark: #0f0d0b;
+      }
+    }
+  </style>
+  <rect class="app-base" x="10" y="10" width="30" height="44" rx="12" fill="var(--base)" />
+  <rect class="app-top" x="24" y="16" width="30" height="32" rx="12" fill="var(--top)" />
+  <path
+    class="app-mark"
+    d="M30 30h18M30 38h11"
+    stroke="var(--mark)"
+    stroke-width="3"
+    stroke-linecap="round"
+    fill="none"
+  />
+</svg>
